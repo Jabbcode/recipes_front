@@ -1,28 +1,42 @@
-import axios from "axios";
-import { IRecipe } from "../interfaces/recipes";
+import { RecipeI } from "../interfaces/recipes";
+import { deleteRecipeService } from "../api/recipes";
+import { MODE } from "../constantes";
 
 type RecipeProps = {
-  recipe: IRecipe;
-  setMode: any;
-  getRecipe: any;
-  setChangeState: any;
+  recipe: RecipeI;
+  setMode: React.Dispatch<React.SetStateAction<string>>;
+  getRecipeById: (id: string) => void;
+  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Recipe = ({ recipe, setMode, getRecipe, setChangeState }: RecipeProps) => {
+const Recipe = ({
+  recipe,
+  setMode,
+  getRecipeById,
+  setChangeState,
+}: RecipeProps) => {
   const handleRemove = async (id: string) => {
+    await deleteRecipeService(id);
     setChangeState(true);
-    await axios.delete(`http://localhost:8080/api/v1/recipes/${id}`);
   };
 
   return (
-    <div key={recipe._id} style={{ border: "1px solid #000", borderRadius: "3rem", padding: "1rem", width: "150px"}}>
+    <div
+      key={recipe._id}
+      style={{
+        border: "1px solid #000",
+        borderRadius: "3rem",
+        padding: "1rem",
+        width: "150px",
+      }}
+    >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h3>{recipe.title}</h3>
         <button onClick={() => handleRemove(recipe._id!)}>x</button>
         <button
           onClick={() => {
-            setMode("EDTIAR");
-            getRecipe(recipe._id);
+            setMode(MODE.EDIT);
+            getRecipeById(recipe._id!);
           }}
         >
           Editar

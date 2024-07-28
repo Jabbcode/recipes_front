@@ -1,31 +1,56 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { IRecipe, Unit, Ingredient } from "./interfaces/recipes";
+import { FormEvent, useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 
-import RecipesContainer from "./components/RecipesContainer.tsx";
-import AddRecipeForm from "./components/AddRecipeForm.tsx";
-import EditRecipeForm from "./components/EditRecipeForm";
-import { MODE } from "./constantes.ts";
+import AddForm from "./components/AddForm";
+import EditForm from "./components/EditForm";
+import RecipesContainer from "./components/RecipesContainer";
+
+import { getAllRecipesService } from "./api/recipes";
+import { getAllIngredientsService } from "./api/ingredients";
+import { getAllUnitsService } from "./api/units";
+
+import { BasicIngredientI, RecipeI, UnitI } from "./interfaces/recipes";
+import { MODE } from "./constantes";
 
 const App = () => {
-  const [recipes, setRecipes] = useState<IRecipe[]>([]);
   const [mode, setMode] = useState(MODE.ADD);
-  const [recipe, setRecipe] = useState({} as IRecipe);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [units, setUnits] = useState<Unit[]>([]);
+  const [recipe, setRecipe] = useState({} as RecipeI);
+  const [recipes, setRecipes] = useState<RecipeI[]>([]);
+  const [ingredients, setIngredients] = useState<BasicIngredientI[]>([]);
+  const [units, setUnits] = useState<UnitI[]>([]);
   const [changeState, setChangeState] = useState(false);
-  
+
+  const [form, setForm] = useState<RecipeI>({
+    _id: uuid(),
+    title: "",
+    description: "",
+    ingredients: [
+      {
+        _id: "",
+        name: {
+          _id: "",
+          name: "",
+        },
+        quantity: 0,
+        unit: {
+          _id: "",
+          name: "",
+          description: "",
+        },
+      },
+    ],
+  });
+
   useEffect(() => {
     getAllRecipes();
     getAllIngredients();
     getAllUnits();
-
-    return () => {setChangeState(false)}
+    return () => setChangeState(false);
   }, [changeState]);
 
   const getAllRecipes = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8080/api/v1/recipes");
+      const data = await getAllRecipesService();
       setRecipes(data);
     } catch (error) {
       console.log(error);
@@ -33,40 +58,104 @@ const App = () => {
   };
 
   const getAllIngredients = async () => {
-    const { data } = await axios.get(
-      "http://localhost:8080/api/v1/ingredients"
-    );
-    setIngredients(data);
-  };
-
-  const getAllUnits = async () => {
-    const { data } = await axios.get("http://localhost:8080/api/v1/units");
-    setUnits(data);
-  };
-
-  const getRecipeByid = async (id: string) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8080/api/v1/recipes/${id}`
-      );
-      setRecipe(data)
+      const data = await getAllIngredientsService();
+      setIngredients(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return (
-    <div style={{ display: "flex", gap: "10rem" }}>
-      
-      {mode === MODE.ADD 
-        ? <AddRecipeForm ingredients={ingredients} units={units} mode={mode} setChangeState={setChangeState} /> 
-        : <EditRecipeForm recipe={recipe} ingredients={ingredients} units={units} mode={mode} setChangeState={setChangeState} />
-      }
+  const getAllUnits = async () => {
+    try {
+      const data = await getAllUnitsService();
+      setUnits(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const createInput = () => {
+    setForm({
+      ...form,
+      ingredients: [
+        ...form.ingredients,
+        {
+          _id: uuid(),
+          name: {
+            _id: "",
+            name: "",
+          },
+          quantity: 0,
+          unit: {
+            _id: "",
+            name: "",
+            description: "",
+          },
+        },
+      ],
+    });
+  };
+
+  const deleteInput = (id: string) => {
+    setForm({
+      ...form,
+      ingredients: form.ingredients.filter(
+        (ingredient) => ingredient._id !== id
+      ),
+    });
+  };
+
+  const handleChange = (
+    event: FormEvent<HTMLSelectElement> | FormEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = event.currentTarget;
+
+    setForm({
+      ...form,
+      [name]: value,
+      ingredients: [...form.ingredients],
+    });
+  };
+
+  const handleEdit = (id: string) => {
+    setMode(MODE.EDIT);
+    const data = recipes.find((recipe) => recipe._id === id);
+    setRecipe(data!);
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ marginBottom: "3rem" }}>
+        {mode === MODE.ADD ? (
+          <AddForm
+            form={form}
+            setForm={setForm}
+            handleOnChange={handleChange}
+            createInput={createInput}
+            deleteInput={deleteInput}
+            ingredients={ingredients}
+            units={units}
+            setChangeState={setChangeState}
+          />
+        ) : (
+          <EditForm
+            form={form}
+            setForm={setForm}
+            recipe={recipe}
+            handleOnChange={handleChange}
+            createInput={createInput}
+            deleteInput={deleteInput}
+            ingredients={ingredients}
+            units={units}
+            setChangeState={setChangeState}
+          />
+        )}
+      </div>
       <RecipesContainer
         recipes={recipes}
         setMode={setMode}
-        getRecipe={getRecipeByid}
+        getRecipeById={handleEdit}
         setChangeState={setChangeState}
       />
     </div>
