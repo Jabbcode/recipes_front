@@ -1,13 +1,21 @@
 import instanceAxios from "../helpers/axiosHelper";
-import { RecipeI } from "../interfaces/recipes";
+import { RecipeI, RecipeResponseI } from "../interfaces/recipes";
 
-export const getAllRecipesService = async () => {
-  const { data } = await instanceAxios.get("/recipes");
+export const getAllRecipesService = async ({
+  limit = "10",
+  page = "1",
+}: {
+  limit: string;
+  page: string;
+}) => {
+  const { data } = await instanceAxios.get<RecipeResponseI>(
+    `/recipes?limit=${limit}&page=${page}`
+  );
   return data;
 };
 
 export const getRecipeByIdService = async (id: string) => {
-  const { data } = await instanceAxios.get(`/recipes/${id}`);
+  const { data } = await instanceAxios.get<RecipeI>(`/recipes/${id}`);
   return data;
 };
 

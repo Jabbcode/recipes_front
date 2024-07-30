@@ -5,20 +5,28 @@ import AddForm from "./components/AddForm";
 import EditForm from "./components/EditForm";
 import RecipesContainer from "./components/RecipesContainer";
 
-import { getAllRecipesService } from "./api/recipes";
-import { getAllIngredientsService } from "./api/ingredients";
-import { getAllUnitsService } from "./api/units";
+import {
+  getAllRecipesService,
+  getAllIngredientsService,
+  getAllUnitsService,
+} from "./api";
 
-import { BasicIngredientI, RecipeI, UnitI } from "./interfaces/recipes";
+import { IngredientI, RecipeI, UnitI } from "./interfaces";
+
 import { MODE } from "./constantes";
+import AppLayout from "./layouts/AppLayout";
 
 const App = () => {
   const [mode, setMode] = useState(MODE.ADD);
   const [recipe, setRecipe] = useState({} as RecipeI);
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
-  const [ingredients, setIngredients] = useState<BasicIngredientI[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientI[]>([]);
   const [units, setUnits] = useState<UnitI[]>([]);
   const [changeState, setChangeState] = useState(false);
+  const [pagination, setPagination] = useState({
+    limit: "20",
+    page: "1",
+  });
 
   const [form, setForm] = useState<RecipeI>({
     _id: uuid(),
@@ -50,8 +58,8 @@ const App = () => {
 
   const getAllRecipes = async () => {
     try {
-      const data = await getAllRecipesService();
-      setRecipes(data);
+      const { recipes } = await getAllRecipesService(pagination);
+      setRecipes(recipes);
     } catch (error) {
       console.log(error);
     }
@@ -59,8 +67,8 @@ const App = () => {
 
   const getAllIngredients = async () => {
     try {
-      const data = await getAllIngredientsService();
-      setIngredients(data);
+      const { ingredients } = await getAllIngredientsService();
+      setIngredients(ingredients);
     } catch (error) {
       console.log(error);
     }
@@ -68,8 +76,8 @@ const App = () => {
 
   const getAllUnits = async () => {
     try {
-      const data = await getAllUnitsService();
-      setUnits(data);
+      const { units } = await getAllUnitsService();
+      setUnits(units);
     } catch (error) {
       console.log(error);
     }
@@ -125,40 +133,38 @@ const App = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ marginBottom: "3rem" }}>
-        {mode === MODE.ADD ? (
-          <AddForm
-            form={form}
-            setForm={setForm}
-            handleOnChange={handleChange}
-            createInput={createInput}
-            deleteInput={deleteInput}
-            ingredients={ingredients}
-            units={units}
-            setChangeState={setChangeState}
-          />
-        ) : (
-          <EditForm
-            form={form}
-            setForm={setForm}
-            recipe={recipe}
-            handleOnChange={handleChange}
-            createInput={createInput}
-            deleteInput={deleteInput}
-            ingredients={ingredients}
-            units={units}
-            setChangeState={setChangeState}
-          />
-        )}
-      </div>
+    <AppLayout>
       <RecipesContainer
         recipes={recipes}
         setMode={setMode}
         getRecipeById={handleEdit}
         setChangeState={setChangeState}
       />
-    </div>
+      {mode === MODE.ADD ? (
+        <AddForm
+          form={form}
+          setForm={setForm}
+          handleOnChange={handleChange}
+          createInput={createInput}
+          deleteInput={deleteInput}
+          ingredients={ingredients}
+          units={units}
+          setChangeState={setChangeState}
+        />
+      ) : (
+        <EditForm
+          form={form}
+          setForm={setForm}
+          recipe={recipe}
+          handleOnChange={handleChange}
+          createInput={createInput}
+          deleteInput={deleteInput}
+          ingredients={ingredients}
+          units={units}
+          setChangeState={setChangeState}
+        />
+      )}
+    </AppLayout>
   );
 };
 
