@@ -1,22 +1,21 @@
 import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import AddForm from "./components/AddForm";
-import EditForm from "./components/EditForm";
-import RecipesContainer from "./components/RecipesContainer";
+import AddForm from "../../components/AddForm";
+import EditForm from "../../components/EditForm";
+import RecipesContainer from "../../components/RecipesContainer";
 
 import {
   getAllRecipesService,
   getAllIngredientsService,
   getAllUnitsService,
-} from "./api";
+} from "../../api";
 
-import { IngredientI, RecipeI, UnitI } from "./interfaces";
+import { IngredientI, RecipeI, UnitI } from "../../interfaces";
 
-import { MODE } from "./constantes";
-import AppLayout from "./layouts/AppLayout";
+import { MODE } from "../../constantes";
 
-const App = () => {
+const RecipesPage = () => {
   const [mode, setMode] = useState(MODE.ADD);
   const [recipe, setRecipe] = useState({} as RecipeI);
   const [recipes, setRecipes] = useState<RecipeI[]>([]);
@@ -67,7 +66,7 @@ const App = () => {
 
   const getAllIngredients = async () => {
     try {
-      const { ingredients } = await getAllIngredientsService();
+      const { ingredients } = await getAllIngredientsService(pagination);
       setIngredients(ingredients);
     } catch (error) {
       console.log(error);
@@ -76,7 +75,7 @@ const App = () => {
 
   const getAllUnits = async () => {
     try {
-      const { units } = await getAllUnitsService();
+      const { units } = await getAllUnitsService(pagination);
       setUnits(units);
     } catch (error) {
       console.log(error);
@@ -133,7 +132,7 @@ const App = () => {
   };
 
   return (
-    <AppLayout>
+    <div className="grid grid-cols-12 gap-4">
       <RecipesContainer
         recipes={recipes}
         setMode={setMode}
@@ -164,8 +163,8 @@ const App = () => {
           setChangeState={setChangeState}
         />
       )}
-    </AppLayout>
+    </div>
   );
 };
 
-export default App;
+export default RecipesPage;

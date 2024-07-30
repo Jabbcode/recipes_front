@@ -1,11 +1,15 @@
-interface AppLayoutsProps {
-  children: React.ReactNode[];
-}
+import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
-const AppLayout = ({ children }: AppLayoutsProps) => {
+interface AppLayoutsProps {}
+
+const AppLayout = ({}: AppLayoutsProps) => {
   return (
-    <div className="grid grid-cols-12 gap-4">
-      {children}
+    <div className="flex flex-col">
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };
