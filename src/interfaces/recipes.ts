@@ -1,17 +1,9 @@
-export interface UnitI {
-  _id?: string;
-  name: string;
-  description: string;
-}
+import { IngredientI } from "./ingredients";
+import { UnitI } from "./unit";
 
-export interface BasicIngredientI {
-  _id?: string;
-  name: string;
-}
-
-export interface IngredientI {
+export interface IngredientRecipeI {
   _id: string;
-  name: BasicIngredientI;
+  name: IngredientI;
   quantity: number;
   unit: UnitI;
 }
@@ -20,5 +12,11 @@ export interface RecipeI {
   _id: string;
   title: string;
   description: string;
-  ingredients: IngredientI[];
+  ingredients: IngredientRecipeI[];
+}
+
+export interface RecipeResponseI {
+  recipes: RecipeI[];
+  totalRecipes: number;
+  totlaPages: number;
 }
