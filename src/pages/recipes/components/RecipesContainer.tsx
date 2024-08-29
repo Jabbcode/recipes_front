@@ -1,4 +1,4 @@
-import { RecipeI } from "../interfaces/recipes";
+import { RecipeI } from "@/interfaces";
 import Recipe from "./Recipe";
 
 type RecipesContainerProps = {

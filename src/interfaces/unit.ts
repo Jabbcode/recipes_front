@@ -4,8 +4,13 @@ export interface UnitI {
   description: string;
 }
 
-export interface UnitResponseI {
+export interface UnitsResponseI {
   units: UnitI[];
   totalUnits: number;
-  totlaPages: number;
+  totalPages: number;
+}
+
+export interface UnitResponseI {
+  unit: UnitI;
+  message: String;
 }

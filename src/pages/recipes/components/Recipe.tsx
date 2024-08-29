@@ -1,8 +1,10 @@
-import { RecipeI } from "../interfaces/recipes";
-import { deleteRecipeService } from "../api/recipes.service";
-import { MODE } from "../constantes";
+import { RecipeI } from "@/interfaces/recipes";
+import { deleteRecipeService } from "@/api";
+
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
+
+import { MODE } from "../../../constantes";
 
 type RecipeProps = {
   recipe: RecipeI;

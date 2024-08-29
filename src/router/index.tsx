@@ -5,6 +5,7 @@ import NotFound from "../components/NotFound";
 
 import RecipesPage from "../pages/recipes/RecipesPage";
 import SettingsPage from "../pages/settings/SettingsPage";
+import PlanningPage from "../pages/planning/PlanningPage";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
+      },
+      {
+        path: "/planning",
+        element: <PlanningPage />,
       },
     ],
   },

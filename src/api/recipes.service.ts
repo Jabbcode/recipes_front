@@ -1,5 +1,9 @@
 import instanceAxios from "../helpers/axiosHelper";
-import { RecipeI, RecipeResponseI } from "../interfaces/recipes";
+import {
+  RecipeI,
+  RecipeResponseI,
+  RecipesResponseI,
+} from "../interfaces/recipes";
 
 export const getAllRecipesService = async ({
   limit = "10",
@@ -8,7 +12,7 @@ export const getAllRecipesService = async ({
   limit: string;
   page: string;
 }) => {
-  const { data } = await instanceAxios.get<RecipeResponseI>(
+  const { data } = await instanceAxios.get<RecipesResponseI>(
     `/recipes?limit=${limit}&page=${page}`
   );
   return data;
@@ -20,7 +24,7 @@ export const getRecipeByIdService = async (id: string) => {
 };
 
 export const createRecipeService = async (form: RecipeI) => {
-  const { data } = await instanceAxios.post("/recipes", form);
+  const { data } = await instanceAxios.post<RecipeResponseI>("/recipes", form);
   return data;
 };
 

@@ -1,5 +1,5 @@
-import { IngredientI, RecipeI, UnitI } from "../interfaces";
-import { createRecipeService } from "../api";
+import { IngredientI, RecipeI, UnitI } from "@/interfaces";
+import { createRecipeService } from "@/api";
 
 import { HiPlus } from "react-icons/hi";
 import { GrFormSubtract } from "react-icons/gr";

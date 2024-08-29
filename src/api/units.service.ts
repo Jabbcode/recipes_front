@@ -1,5 +1,5 @@
 import instanceAxios from "../helpers/axiosHelper";
-import { UnitResponseI } from "../interfaces/unit";
+import { UnitI, UnitResponseI, UnitsResponseI } from "../interfaces";
 
 export const getAllUnitsService = async ({
   limit = "10",
@@ -8,8 +8,13 @@ export const getAllUnitsService = async ({
   limit: string;
   page: string;
 }) => {
-  const { data } = await instanceAxios.get<UnitResponseI>(
+  const { data } = await instanceAxios.get<UnitsResponseI>(
     `/units?limit=${limit}&page=${page}`
   );
+  return data;
+};
+
+export const createUnitService = async (form: UnitI) => {
+  const { data } = await instanceAxios.post<UnitResponseI>("/units", form);
   return data;
 };

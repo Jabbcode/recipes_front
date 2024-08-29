@@ -1,5 +1,9 @@
 import instanceAxios from "../helpers/axiosHelper";
-import { IngredientResponseI } from "../interfaces/ingredients";
+import {
+  IngredientI,
+  IngredientResponseI,
+  IngredientsResponseI,
+} from "../interfaces/ingredients";
 
 export const getAllIngredientsService = async ({
   limit = "10",
@@ -8,8 +12,16 @@ export const getAllIngredientsService = async ({
   limit: string;
   page: string;
 }) => {
-  const { data } = await instanceAxios.get<IngredientResponseI>(
+  const { data } = await instanceAxios.get<IngredientsResponseI>(
     `/ingredients?limit=${limit}&page=${page}`
+  );
+  return data;
+};
+
+export const createIngredientService = async (form: IngredientI) => {
+  const { data } = await instanceAxios.post<IngredientResponseI>(
+    "/ingredients",
+    form
   );
   return data;
 };

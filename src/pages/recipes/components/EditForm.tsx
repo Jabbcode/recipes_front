@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { IngredientI, RecipeI, UnitI } from "../interfaces";
-import { updateRecipeService } from "../api";
+import { IngredientI, RecipeI, UnitI } from "@/interfaces";
+import { updateRecipeService } from "@/api";
 
 import { HiPlus } from "react-icons/hi";
 import { GrFormSubtract } from "react-icons/gr";

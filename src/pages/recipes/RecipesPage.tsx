@@ -1,17 +1,17 @@
 import { FormEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
-import AddForm from "../../components/AddForm";
-import EditForm from "../../components/EditForm";
-import RecipesContainer from "../../components/RecipesContainer";
+import AddForm from "./components/AddForm";
+import EditForm from "./components/EditForm";
+import RecipesContainer from "./components/RecipesContainer";
 
 import {
   getAllRecipesService,
   getAllIngredientsService,
   getAllUnitsService,
-} from "../../api";
+} from "@/api";
 
-import { IngredientI, RecipeI, UnitI } from "../../interfaces";
+import { IngredientI, RecipeI, UnitI } from "@/interfaces";
 
 import { MODE } from "../../constantes";
 

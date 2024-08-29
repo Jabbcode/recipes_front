@@ -15,8 +15,13 @@ export interface RecipeI {
   ingredients: IngredientRecipeI[];
 }
 
-export interface RecipeResponseI {
+export interface RecipesResponseI {
   recipes: RecipeI[];
   totalRecipes: number;
   totlaPages: number;
+}
+
+export interface RecipeResponseI {
+  message: String;
+  recipe: RecipeI;
 }

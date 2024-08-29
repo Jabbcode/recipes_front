@@ -10,6 +10,9 @@ const Navbar = () => {
         <Link to="/settings" className="btn btn-outline-primary">
           Configuracion
         </Link>
+        <Link to="/planning" className="btn btn-outline-primary">
+          Planificacion
+        </Link>
       </div>
     </nav>
   );

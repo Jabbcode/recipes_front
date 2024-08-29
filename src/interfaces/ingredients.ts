@@ -3,8 +3,13 @@ export interface IngredientI {
   name: string;
 }
 
-export interface IngredientResponseI {
+export interface IngredientsResponseI {
   ingredients: IngredientI[];
   totalIngredients: number;
-  totlaPages: number;
+  totalPages: number;
+}
+
+export interface IngredientResponseI {
+  ingredient: IngredientI;
+  message: String;
 }
