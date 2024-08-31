@@ -16,7 +16,7 @@ const RecipesContainer = ({
 }: RecipesContainerProps) => {
   return (
     <div className="col-span-9 h-screen">
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap gap-2">
         {recipes.length > 0
           ? recipes.map((recipe) => {
               return (
