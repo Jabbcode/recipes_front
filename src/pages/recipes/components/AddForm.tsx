@@ -16,7 +16,6 @@ type AddFormProps = {
   deleteInput: (id: string) => void;
   ingredients: IngredientI[];
   units: UnitI[];
-  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AddForm = ({
@@ -27,7 +26,6 @@ const AddForm = ({
   deleteInput,
   ingredients,
   units,
-  setChangeState,
 }: AddFormProps) => {
   const handleOnChangeArray = (
     event:
@@ -70,7 +68,6 @@ const AddForm = ({
     };
 
     await createRecipeService(data);
-    setChangeState(true);
   };
 
   return (

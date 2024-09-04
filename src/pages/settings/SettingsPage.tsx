@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import {
-  createIngredientService,
   createUnitService,
   getAllIngredientsService,
   getAllUnitsService,
@@ -8,10 +7,18 @@ import {
 import Pagination from "@/components/Pagination";
 import { IngredientI, UnitI } from "@/interfaces";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { useAppDispath, useAppSelector } from "@/store/hook";
+import {
+  addIngredientThunk,
+  deleteIngredientThunk,
+} from "@/store/features/ingredient/thunks";
 
 const SettingsPage = () => {
-  const [ingredients, setIngredients] = useState<IngredientI[]>([]);
+  const dispatch = useAppDispath();
+  const { ingredients: i } = useAppSelector((state) => state.ingredient);
+
   const [units, setUnits] = useState<UnitI[]>([]);
+  const [ingredients, setIngredients] = useState<IngredientI[]>([]);
 
   const [formIngredient, setFormIngredient] = useState({
     name: "",
@@ -75,14 +82,7 @@ const SettingsPage = () => {
   const handleOnSubmitIngredient = async (event: FormEvent) => {
     event.preventDefault();
 
-    try {
-      const { ingredient, message } = await createIngredientService(
-        formIngredient
-      );
-      console.log({ ingredient, message });
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(addIngredientThunk(formIngredient));
   };
 
   const handleOnChangeUnit = (event: ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +102,10 @@ const SettingsPage = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDeleteIngredient = (id: string) => {
+    dispatch(deleteIngredientThunk(id));
   };
 
   return (
@@ -148,7 +152,12 @@ const SettingsPage = () => {
                             href="#"
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                           >
-                            <MdDelete size={16} />
+                            <MdDelete
+                              onClick={() =>
+                                handleDeleteIngredient(ingredient._id!)
+                              }
+                              size={16}
+                            />
                           </a>
                         </div>
                       </td>

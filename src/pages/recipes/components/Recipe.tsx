@@ -17,27 +17,24 @@ type RecipeProps = {
   recipe: RecipeI;
   setMode: React.Dispatch<React.SetStateAction<string>>;
   getRecipeById: (id: string) => void;
-  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Recipe = ({
-  recipe,
-  setMode,
-  getRecipeById,
-  setChangeState,
-}: RecipeProps) => {
+const Recipe = ({ recipe, setMode, getRecipeById }: RecipeProps) => {
   const handleRemove = async (id: string) => {
     await deleteRecipeService(id);
-    setChangeState(true);
   };
 
   return (
     <Card key={recipe._id} className="w-[350px] bg-teal-200 opacity-90">
       <CardHeader className="bg-teal-800 rounded-t-md p-1">
-        <CardTitle className="font-light text-sm text-white py-1 px-2">{recipe.title}</CardTitle>
+        <CardTitle className="font-light text-sm text-white py-1 px-2">
+          {recipe.title}
+        </CardTitle>
       </CardHeader>
       <CardContent className="mt-2">
-        <CardContent className="font-light text-sm">{recipe.description}</CardContent>
+        <CardContent className="font-light text-sm">
+          {recipe.description}
+        </CardContent>
         <div className="flex mt-3">
           <h5 className="font-light text-sm px-2">
             <span className="font-bold">{recipe.ingredients.length}</span>{" "}

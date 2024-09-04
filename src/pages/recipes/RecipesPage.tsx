@@ -5,27 +5,28 @@ import AddForm from "./components/AddForm";
 import EditForm from "./components/EditForm";
 import RecipesContainer from "./components/RecipesContainer";
 
-import {
-  getAllRecipesService,
-  getAllIngredientsService,
-  getAllUnitsService,
-} from "@/api";
-
-import { IngredientI, RecipeI, UnitI } from "@/interfaces";
+import { RecipeI } from "@/interfaces";
 
 import { MODE } from "../../constantes";
+import { useAppDispath, useAppSelector } from "@/store/hook";
+import { fetchAllIngredientsThunk } from "@/store/features/ingredient/thunks";
+import { fetchUnits } from "@/store/features/unit/thunks";
+import { fetchRecipes } from "@/store/features/recipe/thunks";
 
 const RecipesPage = () => {
   const [mode, setMode] = useState(MODE.ADD);
   const [recipe, setRecipe] = useState({} as RecipeI);
-  const [recipes, setRecipes] = useState<RecipeI[]>([]);
-  const [ingredients, setIngredients] = useState<IngredientI[]>([]);
-  const [units, setUnits] = useState<UnitI[]>([]);
-  const [changeState, setChangeState] = useState(false);
-  const [pagination, setPagination] = useState({
-    limit: "20",
-    page: "1",
-  });
+
+  const dispatch = useAppDispath();
+  const { ingredients } = useAppSelector((state) => state.ingredient);
+  const { units } = useAppSelector((state) => state.unit);
+  const { recipes } = useAppSelector((state) => state.recipe);
+
+  useEffect(() => {
+    dispatch(fetchAllIngredientsThunk());
+    dispatch(fetchUnits());
+    dispatch(fetchRecipes());
+  }, [dispatch]);
 
   const [form, setForm] = useState<RecipeI>({
     _id: uuid(),
@@ -47,40 +48,6 @@ const RecipesPage = () => {
       },
     ],
   });
-
-  useEffect(() => {
-    getAllRecipes();
-    getAllIngredients();
-    getAllUnits();
-    return () => setChangeState(false);
-  }, [changeState]);
-
-  const getAllRecipes = async () => {
-    try {
-      const { recipes } = await getAllRecipesService(pagination);
-      setRecipes(recipes);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getAllIngredients = async () => {
-    try {
-      const { ingredients } = await getAllIngredientsService(pagination);
-      setIngredients(ingredients);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getAllUnits = async () => {
-    try {
-      const { units } = await getAllUnitsService(pagination);
-      setUnits(units);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const createInput = () => {
     setForm({
@@ -137,7 +104,6 @@ const RecipesPage = () => {
         recipes={recipes}
         setMode={setMode}
         getRecipeById={handleEdit}
-        setChangeState={setChangeState}
       />
       {mode === MODE.ADD ? (
         <AddForm
@@ -148,7 +114,6 @@ const RecipesPage = () => {
           deleteInput={deleteInput}
           ingredients={ingredients}
           units={units}
-          setChangeState={setChangeState}
         />
       ) : (
         <EditForm
@@ -160,7 +125,6 @@ const RecipesPage = () => {
           deleteInput={deleteInput}
           ingredients={ingredients}
           units={units}
-          setChangeState={setChangeState}
         />
       )}
     </div>
