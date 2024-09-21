@@ -4,7 +4,7 @@ import AppLayout from "../layouts/AppLayout";
 import NotFound from "../components/NotFound";
 
 import RecipesPage from "../pages/recipes/RecipesPage";
-import SettingsPage from "../pages/settings/SettingsPage";
+import MyStorePage from "@/pages/my-store/MyStorePage";
 import PlanningPage from "../pages/planning/PlanningPage";
 
 export const router = createBrowserRouter([
@@ -18,8 +18,8 @@ export const router = createBrowserRouter([
         element: <RecipesPage />,
       },
       {
-        path: "/settings",
-        element: <SettingsPage />,
+        path: "/my-store",
+        element: <MyStorePage />,
       },
       {
         path: "/planning",

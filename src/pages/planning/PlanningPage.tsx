@@ -1,45 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import Modal from "@/components/Modal";
+import axios from "axios";
 
 const PlanningPage = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+
+  const [events, setEvents] = useState<any>([]);
+
+  useEffect(() => {
+    getAllEventsService(month);
+  }, [month]);
+
+  const getAllEventsService = async (month: number) => {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/events/${month}`
+    );
+    setEvents([
+      ...events,
+      ...response.data.map((event: any) => {
+        return {
+          id: event.id,
+          idReceta: event.recipe.id,
+          title: event.recipe.title,
+          type: event.type,
+          date: event.date,
+        };
+      }),
+    ]);
+  };
+
+  console.log(events);
 
   const getEventColor = (tipo) => {
     switch (tipo) {
-      case "desayuno":
+      case "Desayuno":
         return "orange";
-      case "almuerzo":
+      case "Almuerzo":
         return "green";
-      case "cena":
+      case "Cena":
         return "purple";
       default:
         return "gray";
     }
   };
 
-  const [events, setEvents] = useState([
-    {
-      id: "66a7f9eb73da6ee732c1ce2e",
-      tipo: "desayuno",
-      title: "Desayuno",
-      start: "2024-07-12",
-    },
-    {
-      id: "66a8245773da6ee732c1ceee",
-      tipo: "almuerzo",
-      title: "Almuerzo",
-      start: "2024-07-01",
-    },
-  ]);
   const handleSelect = (arg) => {
     setOpen(true);
-    const { tipo } = arg.event._def.extendedProps;
+    const { idReceta } = arg.event._def.extendedProps;
     const id = arg.event._def.publicId;
-    setId(id);
-    console.log(id, arg);
+    setId(idReceta);
+    console.log(idReceta, arg);
   };
 
   const handleClose = () => {
@@ -48,14 +62,14 @@ const PlanningPage = () => {
 
   return (
     <div>
-      <div className="w-[720px] m-4">
+      <div className="m-4">
         <FullCalendar
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
           events={events.map((event) => {
             return {
               ...event,
-              color: getEventColor(event.tipo),
+              color: getEventColor(event.type),
             };
           })}
           eventClick={handleSelect}

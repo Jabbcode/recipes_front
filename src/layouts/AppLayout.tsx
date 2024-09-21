@@ -8,7 +8,9 @@ const AppLayout = ({}: AppLayoutsProps) => {
     <div className="flex flex-col">
       <Navbar />
       <main>
-        <Outlet />
+        <div className="px-2 py-1">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

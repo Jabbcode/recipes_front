@@ -10,7 +10,7 @@ import { RecipeI } from "@/interfaces";
 import { MODE } from "../../constantes";
 import { useAppDispath, useAppSelector } from "@/store/hook";
 import { fetchAllIngredientsThunk } from "@/store/features/ingredient/thunks";
-import { fetchUnits } from "@/store/features/unit/thunks";
+import { fetchAllUnitsThunk } from "@/store/features/unit/thunks";
 import { fetchRecipes } from "@/store/features/recipe/thunks";
 
 const RecipesPage = () => {
@@ -24,7 +24,7 @@ const RecipesPage = () => {
 
   useEffect(() => {
     dispatch(fetchAllIngredientsThunk());
-    dispatch(fetchUnits());
+    dispatch(fetchAllUnitsThunk());
     dispatch(fetchRecipes());
   }, [dispatch]);
 
@@ -36,12 +36,12 @@ const RecipesPage = () => {
       {
         _id: "",
         name: {
-          _id: "",
+          id: "",
           name: "",
         },
         quantity: 0,
         unit: {
-          _id: "",
+          id: "",
           name: "",
           description: "",
         },
@@ -57,12 +57,12 @@ const RecipesPage = () => {
         {
           _id: uuid(),
           name: {
-            _id: "",
+            id: "",
             name: "",
           },
           quantity: 0,
           unit: {
-            _id: "",
+            id: "",
             name: "",
             description: "",
           },

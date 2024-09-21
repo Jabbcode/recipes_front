@@ -11,7 +11,7 @@ import { Toaster } from "sonner";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <React.StrictMode>
-      <Toaster />
+      <Toaster richColors expand={true} />
       <RouterProvider router={router} />
     </React.StrictMode>
   </Provider>
