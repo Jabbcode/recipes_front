@@ -25,3 +25,20 @@ export const createIngredientService = async (form: IngredientI) => {
   );
   return data;
 };
+
+export const updateIngredientService = async (id: string, name: string) => {
+  const { data } = await instanceAxios.patch<IngredientResponseI>(
+    `/ingredients/${id}`,
+    {
+      name,
+    }
+  );
+  return data;
+};
+
+export const deleteIngredientService = async (id: string) => {
+  const { data } = await instanceAxios.delete<IngredientResponseI>(
+    `/ingredients/${id}`
+  );
+  return data;
+};

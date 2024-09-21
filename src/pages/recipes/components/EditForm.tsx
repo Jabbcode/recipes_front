@@ -14,7 +14,6 @@ type EditFormProps = {
   deleteInput: (id: string) => void;
   ingredients: IngredientI[];
   units: UnitI[];
-  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditForm = ({
@@ -26,7 +25,6 @@ const EditForm = ({
   deleteInput,
   ingredients,
   units,
-  setChangeState,
 }: EditFormProps) => {
   useEffect(() => {
     setForm({
@@ -74,7 +72,6 @@ const EditForm = ({
       ],
     };
     await updateRecipeService(data, recipe._id!);
-    setChangeState(true);
   };
 
   return (

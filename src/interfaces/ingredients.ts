@@ -1,12 +1,12 @@
 export interface IngredientI {
-  _id?: string;
+  id?: string;
   name: string;
 }
 
 export interface IngredientsResponseI {
   ingredients: IngredientI[];
-  totalIngredients: number;
-  totalPages: number;
+  total: number;
+  pages: number;
 }
 
 export interface IngredientResponseI {

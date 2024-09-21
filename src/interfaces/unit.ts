@@ -1,13 +1,13 @@
 export interface UnitI {
-  _id?: string;
+  id?: string;
   name: string;
   description: string;
 }
 
 export interface UnitsResponseI {
   units: UnitI[];
-  totalUnits: number;
-  totalPages: number;
+  total: number;
+  pages: number;
 }
 
 export interface UnitResponseI {

@@ -4,9 +4,15 @@ import "./styles/globals.css";
 
 import { router } from "./router";
 import { RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { Toaster } from "sonner";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <Toaster richColors expand={true} />
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </Provider>
 );

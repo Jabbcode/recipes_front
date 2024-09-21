@@ -5,14 +5,12 @@ type RecipesContainerProps = {
   recipes: RecipeI[];
   setMode: React.Dispatch<React.SetStateAction<string>>;
   getRecipeById: (id: string) => void;
-  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const RecipesContainer = ({
   recipes,
   setMode,
   getRecipeById,
-  setChangeState,
 }: RecipesContainerProps) => {
   return (
     <div className="col-span-9 h-screen">
@@ -25,7 +23,6 @@ const RecipesContainer = ({
                   recipe={recipe}
                   setMode={setMode}
                   getRecipeById={getRecipeById}
-                  setChangeState={setChangeState}
                 />
               );
             })
