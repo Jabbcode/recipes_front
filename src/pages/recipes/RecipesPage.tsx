@@ -23,8 +23,8 @@ const RecipesPage = () => {
   const { recipes } = useAppSelector((state) => state.recipe);
 
   useEffect(() => {
-    dispatch(fetchAllIngredientsThunk());
-    dispatch(fetchAllUnitsThunk());
+    dispatch(fetchAllIngredientsThunk(1, 10));
+    dispatch(fetchAllUnitsThunk(1, 10));
     dispatch(fetchRecipes());
   }, [dispatch]);
 
@@ -36,12 +36,12 @@ const RecipesPage = () => {
       {
         _id: "",
         name: {
-          id: "",
+          _id: "",
           name: "",
         },
         quantity: 0,
         unit: {
-          id: "",
+          _id: "",
           name: "",
           description: "",
         },
@@ -57,12 +57,12 @@ const RecipesPage = () => {
         {
           _id: uuid(),
           name: {
-            id: "",
+            _id: "",
             name: "",
           },
           quantity: 0,
           unit: {
-            id: "",
+            _id: "",
             name: "",
             description: "",
           },

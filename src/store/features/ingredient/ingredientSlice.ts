@@ -36,7 +36,7 @@ const ingredientSlice = createSlice({
     editIngredient: (state, action: PayloadAction<IngredientI>) => {
       state.isLoading = false;
       state.ingredients = state.ingredients.map((ingredient) => {
-        if (ingredient.id === action.payload.id) {
+        if (ingredient._id === action.payload._id) {
           ingredient.name = action.payload.name;
         }
         return ingredient;
@@ -44,7 +44,7 @@ const ingredientSlice = createSlice({
     },
     deleteIngredient: (state, action: PayloadAction<string>) => {
       const targetIndex = state.ingredients.findIndex(
-        (ingredient) => ingredient.id === action.payload
+        (ingredient) => ingredient._id === action.payload
       );
 
       state.ingredients.splice(targetIndex, 1);

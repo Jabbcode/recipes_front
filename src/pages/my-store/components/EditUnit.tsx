@@ -79,7 +79,7 @@ export const EditUnit = ({ unit }: EditUnitProps) => {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="button" onClick={() => handleEditUnit(unit.id!)}>
+            <Button type="button" onClick={() => handleEditUnit(unit._id!)}>
               Actualizar
             </Button>
           </SheetClose>

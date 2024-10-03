@@ -36,7 +36,7 @@ const unitsSlice = createSlice({
     editUnit: (state, action: PayloadAction<UnitI>) => {
       state.isLoading = false;
       state.units = state.units.map((unit) => {
-        if (unit.id === action.payload.id) {
+        if (unit._id === action.payload._id) {
           unit = action.payload;
         }
         return unit;
@@ -44,7 +44,7 @@ const unitsSlice = createSlice({
     },
     deleteUnit: (state, action: PayloadAction<string>) => {
       const targetIndex = state.units.findIndex(
-        (unit) => unit.id === action.payload
+        (unit) => unit._id === action.payload
       );
       state.units.splice(targetIndex, 1);
     },

@@ -7,7 +7,7 @@ import axios from "axios";
 const PlanningPage = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [month] = useState(new Date().getMonth() + 1);
 
   const [events, setEvents] = useState<any>([]);
 
@@ -33,9 +33,7 @@ const PlanningPage = () => {
     ]);
   };
 
-  console.log(events);
-
-  const getEventColor = (tipo) => {
+  const getEventColor = (tipo: any) => {
     switch (tipo) {
       case "Desayuno":
         return "orange";
@@ -48,10 +46,10 @@ const PlanningPage = () => {
     }
   };
 
-  const handleSelect = (arg) => {
+  const handleSelect = (arg: any) => {
     setOpen(true);
     const { idReceta } = arg.event._def.extendedProps;
-    const id = arg.event._def.publicId;
+    // const id = arg.event._def.publicId;
     setId(idReceta);
     console.log(idReceta, arg);
   };
@@ -66,7 +64,7 @@ const PlanningPage = () => {
         <FullCalendar
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"
-          events={events.map((event) => {
+          events={events.map((event: any) => {
             return {
               ...event,
               color: getEventColor(event.type),

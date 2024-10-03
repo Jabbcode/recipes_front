@@ -65,7 +65,7 @@ export const EditIngredient = ({ ingredient }: EditIngredientProps) => {
           <SheetClose asChild>
             <Button
               type="button"
-              onClick={() => handleEditIngredient(ingredient.id!)}
+              onClick={() => handleEditIngredient(ingredient._id!)}
             >
               Actualizar
             </Button>

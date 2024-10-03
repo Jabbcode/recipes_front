@@ -55,7 +55,7 @@ export const columnsUnits: ColumnDef<UnitI>[] = [
           <Button
             variant="ghost"
             className="h-8 w-8 p-0"
-            onClick={() => handleDeleteUnit(unit.id!)}
+            onClick={() => handleDeleteUnit(unit._id!)}
           >
             <span>
               <Trash2 size={18} />

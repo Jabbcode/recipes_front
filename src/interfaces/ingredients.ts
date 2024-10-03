@@ -1,5 +1,5 @@
 export interface IngredientI {
-  id?: string;
+  _id?: string;
   name: string;
 }
 

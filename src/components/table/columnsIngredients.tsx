@@ -41,7 +41,7 @@ export const columnsIngredients: ColumnDef<IngredientI>[] = [
           <Button
             variant="ghost"
             className="h-8 w-8 p-0"
-            onClick={() => handleDeleteIngredient(ingredient.id!)}
+            onClick={() => handleDeleteIngredient(ingredient._id!)}
           >
             <span>
               <Trash2 size={18} />

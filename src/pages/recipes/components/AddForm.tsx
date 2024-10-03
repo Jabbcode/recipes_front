@@ -67,7 +67,7 @@ const AddForm = ({
       ],
     };
 
-    await createRecipeService(data);
+    await createRecipeService(data as any);
   };
 
   return (
@@ -93,7 +93,7 @@ const AddForm = ({
             Descripcion:
           </label>
           <textarea
-            onChange={handleOnChange}
+            onChange={handleOnChange as any}
             name="description"
             id="description"
             className="border rounded-sm mb-2 py-2 px-3"

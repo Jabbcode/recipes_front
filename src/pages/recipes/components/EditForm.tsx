@@ -71,7 +71,7 @@ const EditForm = ({
         }),
       ],
     };
-    await updateRecipeService(data, recipe._id!);
+    await updateRecipeService(data as any, recipe._id!);
   };
 
   return (
@@ -98,7 +98,7 @@ const EditForm = ({
             Descripcion:
           </label>
           <textarea
-            onChange={handleOnChange}
+            onChange={handleOnChange as any}
             value={form.description}
             name="description"
             id="description"
