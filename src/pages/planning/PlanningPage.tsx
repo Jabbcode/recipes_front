@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import Modal from "@/components/Modal";
-import axios from "axios";
+import { getEventsByFilters } from "@/api/events.service";
+import FormEvent from "./components/FormEvent";
+import ModalEvent from "./components/ModalEvent";
 
 const PlanningPage = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState("");
-  const [month] = useState(new Date().getMonth() + 1);
+  const [date] = useState(new Date().getMonth() + 1);
 
   const [events, setEvents] = useState<any>([]);
 
   useEffect(() => {
-    getAllEventsService(month);
-  }, [month]);
+    getAllEventsService(new Date());
+  }, [date]);
 
-  const getAllEventsService = async (month: number) => {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/events/${month}`
-    );
+  const getAllEventsService = async (date: Date) => {
+    const response = await getEventsByFilters({ date });
     setEvents([
       ...events,
-      ...response.data.map((event: any) => {
+      ...response.map((event: any) => {
         return {
           id: event.id,
           idReceta: event.recipe.id,
@@ -51,15 +50,12 @@ const PlanningPage = () => {
     const { idReceta } = arg.event._def.extendedProps;
     // const id = arg.event._def.publicId;
     setId(idReceta);
-    console.log(idReceta, arg);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    // console.log(idReceta, arg);
   };
 
   return (
     <div>
+      <FormEvent />
       <div className="m-4">
         <FullCalendar
           plugins={[dayGridPlugin]}
@@ -83,7 +79,8 @@ const PlanningPage = () => {
           }}
         />
       </div>
-      <Modal isOpen={open} onClose={handleClose} id={id} />
+
+      <ModalEvent id={id} open={open} setOpen={setOpen} />
     </div>
   );
 };

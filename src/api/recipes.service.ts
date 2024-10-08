@@ -18,6 +18,11 @@ export const getAllRecipesService = async ({
   return data;
 };
 
+export const getAllRecipesForSelectService = async () => {
+  const { data } = await instanceAxios.get<any>(`/recipes/select`);
+  return data;
+};
+
 export const getRecipeByIdService = async (id: string) => {
   const { data } = await instanceAxios.get<RecipeI>(`/recipes/${id}`);
   return data;
