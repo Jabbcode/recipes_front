@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown, Trash2 } from "lucide-react";
 
 import { IngredientI } from "@/interfaces";
@@ -8,6 +9,28 @@ import { deleteIngredientThunk } from "@/store/features/ingredient/thunks";
 import { EditIngredient } from "@/pages/my-store/components/EditIngredient";
 
 export const columnsIngredients: ColumnDef<IngredientI>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -41,7 +64,7 @@ export const columnsIngredients: ColumnDef<IngredientI>[] = [
           <Button
             variant="ghost"
             className="h-8 w-8 p-0"
-            onClick={() => handleDeleteIngredient(ingredient._id!)}
+            onClick={() => handleDeleteIngredient(ingredient.id!)}
           >
             <span>
               <Trash2 size={18} />

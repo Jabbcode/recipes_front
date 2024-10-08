@@ -1,5 +1,5 @@
 export interface IngredientI {
-  _id?: string;
+  id?: string;
   name: string;
 }
 
@@ -10,6 +10,7 @@ export interface IngredientsResponseI {
 }
 
 export interface IngredientResponseI {
-  ingredient: IngredientI;
+  ingredient?: IngredientI;
   message: String;
+  statusCode?: number;
 }

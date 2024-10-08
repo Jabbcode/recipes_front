@@ -33,6 +33,7 @@ export const EditIngredient = ({ ingredient }: EditIngredientProps) => {
   const handleEditIngredient = (id: string) => {
     dispatch(editIngredientThunk(id, name));
   };
+  
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -65,7 +66,7 @@ export const EditIngredient = ({ ingredient }: EditIngredientProps) => {
           <SheetClose asChild>
             <Button
               type="button"
-              onClick={() => handleEditIngredient(ingredient._id!)}
+              onClick={() => handleEditIngredient(ingredient.id!)}
             >
               Actualizar
             </Button>

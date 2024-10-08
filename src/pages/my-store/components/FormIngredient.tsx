@@ -11,7 +11,11 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export const FormIngredient = () => {
+interface FormIngredientProps {
+  setChangeState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const FormIngredient = ({ setChangeState }: FormIngredientProps) => {
   const dispatch = useAppDispath();
 
   const [form, setForm] = useState({
@@ -27,8 +31,8 @@ export const FormIngredient = () => {
   };
 
   const handleOnSubmitIngredient = () => {
-    console.log(form);
     dispatch(addIngredientThunk(form));
+    setChangeState(true);
     setForm({ name: "" });
   };
 
